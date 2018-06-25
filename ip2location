@@ -1,0 +1,42 @@
+#!/Users/gregory/.virtualenvs/default/bin/python
+import sys
+import signal
+from lxml import html
+import requests
+
+def signal_handler(signal, frame):
+        print('\n')
+        sys.exit(0)
+
+def main():
+    signal.signal(signal.SIGINT, signal_handler)
+    script = sys.argv[0]
+    ips = sys.argv[1:]
+    
+    if len(sys.argv) < 2:
+        ips = read_in()
+        for ip in ips:
+            lookup(ip)
+    else:
+        for ip in ips:
+            lookup(ip)
+
+def read_in():
+    return [x.strip() for x in sys.stdin]
+
+
+def lookup(ip):
+    url = "http://geoipinfo.org/?ip={0}".format(ip)
+
+    tree = html.fromstring(requests.get(url).content)
+
+    country = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[2]/td[2]/text()')
+    region = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[4]/td[2]/text()')
+    city = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[5]/td[2]/text()')
+
+    return print(', '.join(country + region + city))
+
+
+if __name__ == '__main__':
+   main()
+
