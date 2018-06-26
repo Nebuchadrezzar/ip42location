@@ -18,3 +18,7 @@ e.g :
 #### Piped verbose information:
 `$echo "89.40.97.143\n62.76.8.138" | ip2location -v`<br/>
 <...too long, but you get the idea...>
+
+#### Read a file(s) of IP4 addresses, one per line:
+  `$ip2location < ips.txt`<br/>
+  <...too long, but you get the idea...>
