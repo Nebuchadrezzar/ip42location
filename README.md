@@ -3,9 +3,13 @@ A python script to lookup ip4 addresses and retrieve locational information abou
 
 e.g : 
 
-### Standard use-case: 
+### Standard use-cases: 
   `ip2location 189.90.151.209`<br/>
   `Brazil, Rio Grande do Sul, Sao Luiz Gonzaga`
+  
+  `$sudo cat /var/log/nginx/access.log | ag -o "^[\d\.]+ " | uniq | ip2location`<br/>
+  `Brazil, Rio Grande do Sul, Sao Luiz Gonzaga`
+   `...`
   
 #### Default detail of an IP, read from a std_in here-string:
 `$ip2location <<< echo 189.90.151.209`<br/>
