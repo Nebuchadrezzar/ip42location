@@ -22,4 +22,4 @@ e.g :
 #### Read a file(s) of IP4 addresses, one per line:
   `$ip2location < ips.txt`<br/>
   <...too long, but you get the idea...><br/>
-  Press Cntrl-C to gracefully quit.  
+  Press `Ctrl-C` to gracefully quit.  
