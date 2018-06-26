@@ -1,5 +1,6 @@
 #!/Users/gregory/.virtualenvs/default/bin/python
 import sys
+import argparse
 import signal
 from lxml import html
 import requests
@@ -10,31 +11,46 @@ def signal_handler(signal, frame):
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)
-    script = sys.argv[0]
-    ips = sys.argv[1:]
-    
-    if len(sys.argv) < 2:
-        ips = read_in()
+
+    parser = argparse.ArgumentParser(description="Specifies the location details of IP addresses.")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-v", "--verbose", action="store_true")
+    group.add_argument("-c", "--coordinates", action="store_true")
+    parser.add_argument('IP4', nargs='*', type=str, default=sys.stdin)
+    args = parser.parse_args()
+
+    ips = []
+    if args.IP4:
+        for item in args.IP4:
+            ips.append(item.strip())
+
+    if args.verbose:
         for ip in ips:
-            lookup(ip)
+            lookup(ip, "v")
+    if args.coordinates:
+        for ip in ips:
+            lookup(ip, "c")
     else:
         for ip in ips:
             lookup(ip)
 
-def read_in():
-    return [x.strip() for x in sys.stdin]
-
-
-def lookup(ip):
+def lookup(ip, action=None):
     url = "http://geoipinfo.org/?ip={0}".format(ip)
-
+    # print(url)
     tree = html.fromstring(requests.get(url).content)
 
+    table = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr/td[2]/text()')
+    geo_coordinates = table[6:8]
     country = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[2]/td[2]/text()')
     region = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[4]/td[2]/text()')
     city = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[5]/td[2]/text()')
 
-    return print(', '.join(country + region + city))
+    if action == "v":
+        return print('\n'.join(table))
+    if action == "c":
+        return print(', '.join(table[6:8]))
+    else:
+        return print(', '.join(country + region + city))
 
 
 if __name__ == '__main__':
