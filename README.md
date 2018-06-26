@@ -5,15 +5,15 @@ e.g :
 
 #### Default detail of an IP, read from a std_in here-string:
 `$ip2location <<< echo 189.90.151.209`
-`Brazil, Rio Grande do Sul, Sao Luiz Gonzaga`
+Brazil, Rio Grande do Sul, Sao Luiz Gonzaga
 
 #### Geo-coordinates of IPs string args:
 `$ip2location -c 86.124.71.2`
-`26.133329391479, 44.46667098999`
+26.133329391479, 44.46667098999
 
 #### Piped verbose information:
 `$echo "89.40.97.143\n62.76.8.138" | ip2location -v`
-`89.40.97.143
+89.40.97.143
 Romania
 RO
 Bacau
@@ -34,4 +34,4 @@ Mikhaylovsk
 Bashkir State University
 AS8475 State Educational Institute of Higher Professional Education Bashkirskiy State University
 Romania, Bacau, Bacau
-Russian Federation, Sverdlovskaya oblast', Mikhaylovsk`
+Russian Federation, Sverdlovskaya oblast', Mikhaylovsk
