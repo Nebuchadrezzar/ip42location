@@ -1,4 +1,4 @@
-#!/Users/gregory/.virtualenvs/default/bin/python
+#!/Users/gregory/.virtualenvs/default/bin/python3
 import sys
 import argparse
 import signal
@@ -46,13 +46,13 @@ def lookup(ip, action=None):
     city = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[5]/td[2]/text()')
 
     if action == "v":
-        return print('\n'.join(table))
+        print(''.join(table))
     if action == "c":
-        return print(', '.join(table[6:8]))
+        print(', '.join(table[6:8]))
     else:
-        return print(', '.join(country + region + city))
+        print(', '.join(country + region + city))
 
 
 if __name__ == '__main__':
-   main()
+    main()
 
