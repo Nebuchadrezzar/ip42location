@@ -5,14 +5,17 @@ import signal
 from lxml import html
 import requests
 
+
 def signal_handler(signal, frame):
-        print('\n')
-        sys.exit(0)
+    print('\n')
+    sys.exit(0)
+
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)
 
-    parser = argparse.ArgumentParser(description="Specifies the location details of IP addresses.")
+    parser = argparse.ArgumentParser(
+        description="Specifies the location details of IP addresses.")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-v", "--verbose", action="store_true")
     group.add_argument("-c", "--coordinates", action="store_true")
@@ -34,25 +37,29 @@ def main():
         for ip in ips:
             lookup(ip)
 
+
 def lookup(ip, action=None):
     url = "http://geoipinfo.org/?ip={0}".format(ip)
     # print(url)
     tree = html.fromstring(requests.get(url).content)
 
-    table = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr/td[2]/text()')
+    table = tree.xpath(
+        '//*[@id="map-required-height"]/div/div/table/tbody/tr/td[2]/text()')
     geo_coordinates = table[6:8]
-    country = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[2]/td[2]/text()')
-    region = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[4]/td[2]/text()')
-    city = tree.xpath('//*[@id="map-required-height"]/div/div/table/tbody/tr[5]/td[2]/text()')
+    country = tree.xpath(
+        '//*[@id="map-required-height"]/div/div/table/tbody/tr[2]/td[2]/text()')
+    region = tree.xpath(
+        '//*[@id="map-required-height"]/div/div/table/tbody/tr[4]/td[2]/text()')
+    city = tree.xpath(
+        '//*[@id="map-required-height"]/div/div/table/tbody/tr[5]/td[2]/text()')
 
     if action == "v":
         print(''.join(table))
     if action == "c":
-        print(', '.join(table[6:8]))
+        print(', '.join(geo_coordinates))
     else:
         print(', '.join(country + region + city))
 
 
 if __name__ == '__main__':
     main()
-
