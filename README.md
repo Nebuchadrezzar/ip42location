@@ -1,4 +1,4 @@
-## ip2location
+## ip42location
 A python script to lookup ip4 addresses and retrieve locational information about them. 
 
 e.g : 
