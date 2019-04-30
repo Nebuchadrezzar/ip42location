@@ -1,4 +1,4 @@
-#!/Users/gregory/.virtualenvs/default/bin/python3
+#!/Users/gregory/.local/share/virtualenvs/gregory-NAw_xbvj/bin/python3.7
 import sys
 import argparse
 import signal
